@@ -15,7 +15,6 @@ public class Rins {
         private static final int INDIRECT = 10000;
         private static final Map<Integer, Instruction> MAP = new HashMap<>();
 
-        public static final Instruction HLT = create(0, "HLT");
         public static final Instruction GET = create(1, "GET");
         public static final Instruction SET = create(2, "SET");
         public static final Instruction ADD = create(3, "ADD");
@@ -25,6 +24,7 @@ public class Rins {
         public static final Instruction JMP = create(7, "JMP");
         public static final Instruction JIZ = create(8, "JIZ");
         public static final Instruction JIN = create(9, "JIN");
+        public static final Instruction HLT = create(10, "HLT");
 
         private int value;
         private String mnemonic;
