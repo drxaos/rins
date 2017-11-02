@@ -3,6 +3,7 @@ package com.github.drxaos.rinsworld;
 public class Pos {
 
     private Coord coord;
+    private Locality locality;
     private boolean saved = false;
 
     public Pos(Coord coord) {

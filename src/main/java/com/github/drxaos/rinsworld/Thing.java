@@ -1,6 +1,6 @@
 package com.github.drxaos.rinsworld;
 
-public class Thing {
+public abstract class Thing {
 
     private Pos pos;
 
@@ -11,4 +11,6 @@ public class Thing {
     public Pos getPos() {
         return pos;
     }
+
+    public abstract ThingType getType();
 }

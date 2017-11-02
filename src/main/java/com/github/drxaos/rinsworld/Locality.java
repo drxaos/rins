@@ -1,12 +1,22 @@
 package com.github.drxaos.rinsworld;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 public class Locality {
 
-    ArrayList<Thing> things = new ArrayList<>();
-    HashMap<Coord, Thing> map = new HashMap<>();
+    private ArrayList<Thing> things = new ArrayList<>();
+    private HashMap<Coord, Thing> map = new HashMap<>();
+
+    public List<Thing> getThings() {
+        return Collections.unmodifiableList(things);
+    }
+
+    public void add() {
+
+    }
 
     private void refreshMap() {
         for (Thing thing : things) {
