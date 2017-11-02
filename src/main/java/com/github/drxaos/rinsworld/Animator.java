@@ -1,5 +1,6 @@
 package com.github.drxaos.rinsworld;
 
+import com.github.drxaos.spriter.Control;
 import com.github.drxaos.spriter.Spriter;
 
 import java.awt.*;
@@ -10,14 +11,14 @@ public class Animator {
 
     private Locality locality;
     private ArrayList<ThingSprite> thingSprites = new ArrayList<>();
-    private Spriter.Control control;
+    private Control control;
 
     public Animator(Locality locality) {
         this.locality = locality;
     }
 
     public void runLoop() throws InterruptedException {
-        Spriter spriter = new Spriter("Rins world");
+        Spriter spriter = Spriter.createDefault("Rins world");
         spriter.setViewportWidth(15);
         spriter.setViewportHeight(15);
 
@@ -26,9 +27,10 @@ public class Animator {
 
         control = spriter.getControl();
 
+        SpriteMaker spriteMaker = new SpriteMaker(spriter);
 
         for (Thing thing : locality.getThings()) {
-
+            thingSprites.add(spriteMaker.make(thing));
         }
 
         while (true) {

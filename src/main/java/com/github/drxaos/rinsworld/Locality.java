@@ -14,8 +14,8 @@ public class Locality {
         return Collections.unmodifiableList(things);
     }
 
-    public void add() {
-
+    public void add(Thing thing) {
+        things.add(thing);
     }
 
     private void refreshMap() {

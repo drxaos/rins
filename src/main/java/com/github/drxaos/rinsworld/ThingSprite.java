@@ -1,10 +1,10 @@
 package com.github.drxaos.rinsworld;
 
-import com.github.drxaos.spriter.Spriter;
+import com.github.drxaos.spriter.Sprite;
 
 public class ThingSprite {
 
     Thing thing;
-    Spriter.Sprite sprite;
+    Sprite sprite;
 
 }

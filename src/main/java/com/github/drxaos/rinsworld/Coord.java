@@ -44,4 +44,8 @@ public class Coord {
         result = 31 * result + y;
         return result;
     }
+
+    public static Coord xy(int x, int y) {
+        return new Coord(x, y);
+    }
 }
