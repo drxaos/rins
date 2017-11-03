@@ -4,8 +4,8 @@ public abstract class Thing {
 
     private Pos pos;
 
-    public Thing(Coord coord) {
-        this.pos = new Pos(coord);
+    public Thing(Pos pos) {
+        this.pos = pos;
     }
 
     public Pos getPos() {

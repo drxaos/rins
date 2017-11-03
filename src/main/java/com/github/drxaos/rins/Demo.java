@@ -17,13 +17,15 @@ public class Demo {
         rins.set(4, Rins.Instruction.SET, 9);
         rins.set(5, Rins.Instruction.JMP, 1);
 
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        rins.writeTo(baos);
-        byte[] bytes = baos.toByteArray();
-        System.out.println(Arrays.toString(bytes));
 
-        Rins old = rins;
-        rins = Rins.readFrom(new ByteArrayInputStream(bytes));
+        long t = System.nanoTime();
+        long n = 0;
+        while (System.nanoTime() - t < 1000000000L) {
+            rins.step();
+            n++;
+        }
+
+        System.out.println("1 sec - " + n);
 
         print(rins);
 
@@ -47,9 +49,13 @@ public class Demo {
             String s = "";
             Rins.Instruction ins = rins.getIns(i);
             if (ins != Rins.Instruction.HLT) {
-                s = i + ": " + ins.getMnemonic() + "(" + rins.getArg(i) + ")";
+                if (ins.isDirect()) {
+                    s = i + ": " + ins.getMnemonic() + "(" + rins.getArg(i) + ")";
+                } else {
+                    s = i + ": " + ins.getMnemonic() + "[" + rins.getArg(i) + "]";
+                }
             } else {
-                s = i + ": [" + rins.get(i) + "]";
+                s = i + ": " + rins.get(i) + "";
             }
             if (cursor == i) {
                 s = s + " <=";

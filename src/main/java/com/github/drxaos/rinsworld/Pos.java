@@ -2,36 +2,39 @@ package com.github.drxaos.rinsworld;
 
 public class Pos {
 
-    private Coord coord;
-    private Locality locality;
-    private boolean saved = false;
+    final private int x, y;
+    final private Direction direction;
 
-    public Pos(Coord coord) {
-        this.coord = coord;
+    private Pos(int x, int y, Direction direction) {
+        this.x = x;
+        this.y = y;
+        if (direction == null) {
+            throw new IllegalArgumentException("direction is not nullable");
+        }
+        this.direction = direction;
     }
 
-    public Coord getCoord() {
-        return coord;
+    public int getX() {
+        return x;
     }
 
-    public void setCoord(Coord coord) {
-        this.coord = coord;
-        saved = false;
+    public int getY() {
+        return y;
     }
 
-    public void add(Coord coord) {
-        setCoord(getCoord().add(coord));
+    public Direction getDirection() {
+        return direction;
     }
 
-    public void sub(Coord coord) {
-        setCoord(getCoord().sub(coord));
+    public double getAngle() {
+        return direction.angle;
     }
 
-    public boolean isSaved() {
-        return saved;
+    public static Pos from(int x, int y, Direction direction) {
+        return new Pos(x, y, direction);
     }
 
-    public void setSaved() {
-        saved = true;
+    public static Pos from(int x, int y) {
+        return new Pos(x, y, Direction.RIGHT);
     }
 }

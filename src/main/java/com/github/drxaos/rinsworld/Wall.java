@@ -1,7 +1,7 @@
 package com.github.drxaos.rinsworld;
 
 public class Wall extends Thing {
-    public Wall(Coord coord) {
+    public Wall(Pos coord) {
         super(coord);
     }
 

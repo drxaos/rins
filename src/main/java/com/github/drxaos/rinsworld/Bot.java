@@ -2,7 +2,7 @@ package com.github.drxaos.rinsworld;
 
 public class Bot extends Thing {
 
-    public Bot(Coord coord) {
+    public Bot(Pos coord) {
         super(coord);
     }
 

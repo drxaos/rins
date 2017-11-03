@@ -38,7 +38,7 @@ public class SpriteMaker {
                 throw new UnsupportedOperationException("unknown type");
         }
 
-        sprite.setPos(thing.getPos().getCoord().x, thing.getPos().getCoord().y);
+        sprite.setPos(thing.getPos().getX(), thing.getPos().getY()).setAngle(thing.getPos().getAngle());
         return new ThingSprite();
     }
 

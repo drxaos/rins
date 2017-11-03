@@ -22,8 +22,9 @@ public class Animator {
         spriter.setViewportWidth(15);
         spriter.setViewportHeight(15);
 
-        spriter.setBackgroundColor(Color.BLACK);
+        spriter.setBackgroundColor(Color.GRAY);
         spriter.setDebug(true);
+        spriter.setShowCursor(true);
 
         control = spriter.getControl();
 
