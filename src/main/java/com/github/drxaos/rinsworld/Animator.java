@@ -1,5 +1,6 @@
 package com.github.drxaos.rinsworld;
 
+import com.github.drxaos.rinsworld.things.Thing;
 import com.github.drxaos.spriter.Control;
 import com.github.drxaos.spriter.Spriter;
 

@@ -1,5 +1,7 @@
 package com.github.drxaos.rinsworld;
 
+import com.github.drxaos.rinsworld.things.Thing;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
