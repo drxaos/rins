@@ -1,0 +1,130 @@
+MIN = 0
+MAX = 255
+PC = MAX
+FLAGS = MAX - 1 (sign, zero, overflow)
+A = MAX - 2
+
+# ADDRESSING
+
+TR = 00 [[target]]
+TR = 01 [target]
+TR = 10 [target] flags only
+TR = 11 A
+OP = 00 [[operand]]
+OP = 01 [operand]
+OP = 10 operand
+OP = 11 A
+PT = 00 [[port]]
+PT = 01 [port]
+PT = 10 port
+PT = 11 A
+
+# SYSTEM
+
+HALT               1111 1111
+NOP                0000 0000
+
+# BINARY
+
+ROL                0000 TR 01 target COUNT
+ROR                0000 TR 10 target COUNT
+SSR                0000 TR 11 target COUNT
+
+MOV                0001 TR OP target operand ([target] = [operand], flags)
+
+ADD                0010 TR OP target operand ([target] += [operand], flags)
+SUB                0011 TR OP target operand ([target] -= [operand], flags)
+
+AND                0100 TR OP target operand ([target] &= [operand], flags)
+OR                 0101 TR OP target operand ([target] |= [operand], flags)
+XOR                0110 TR OP target operand ([target] ^= [operand], flags)
+
+# UNARY
+
+INC                0111 00 TR target ([target] += 1)
+DEC                0111 01 TR target ([target] -= 1)
+NEG                0111 10 TR target ([target] = -[target])
+NOT                0111 11 TR target ([target] = ~[target])
+
+# BRANCH
+
+shift is signed
+
+JMP                1000 0000 point (PC = point)
+JMP short          1000 shift (PC = PC + shift)
+
+JIZ                1001 0000 point (PC = point, if ZF=1)
+JIZ short          1001 shift (PC = PC + shift, if ZF=1)
+
+JNZ addr = JIZ label ; JMP addr ; label:
+
+JIN(JNP)           1010 0000 point (PC = point, if SF=1)
+JIN(JNP) short     1010 shift (PC = PC + shift, if SF=1)
+
+JNN(JIP) addr = JIN label ; JMP addr ; label:
+
+JIO                1011 0000 point (PC = point, if OF=1)
+JIO short          1011 shift (PC = PC + shift, if OF=1)
+
+JNO(JIP) addr = JIO label ; JMP addr ; label:
+
+# IO
+
+IN                 1100 TR PT target port ([target] <= (port)), flags)
+OUT                1101 PT OP port operand ((port) <= [operand], flags)
+
+# RESERVED
+
+RS1                 0000 0010 - 0000 1111
+RS2                 1110 0000 - 1110 1111
+RS3                 1111 0000 - 1111 1110
+
+# PREPROCESSOR
+
+FOR X count = MOV X count ; loopNNN: ; JIZ endNNN
+FOR END = DEC X ; JMP loopNNN ; endNNN:
+
+
+
+EXP a = b
+CPY a b
+
+EXP a += 2
+ADD a 2
+
+EXP a[b] = a[2] + b
+
+EXP a = a + 2
+EXP a = a - 2
+EXP a = a * 2
+EXP a = a / 2
+EXP b = a + 2
+EXP b = a + c
+
+EXP a = 2
+EXP a += 2
+
+label1:
+
+# OUT PORTS
+
+0 - light
+1 - left paddle
+2 - right paddle
+3 - sensor angle
+4 - inject
+5
+6
+7
+
+# IN PORTS
+
+0 - power
+1 - sensor distance
+2 - sensor temperature
+3
+4
+5
+6
+7
+

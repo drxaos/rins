@@ -1,0 +1,6 @@
+T__0=1
+TOKEN=2
+COMMENT=3
+EOL=4
+WS=5
+':'=1
