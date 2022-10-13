@@ -14,7 +14,7 @@ public class NanoCpu {
         this.io = io;
     }
 
-    void cycle(long count) {
+    public void cycle(long count) {
         for (int i = 0; i < count; i++) {
             tick();
         }
@@ -55,7 +55,7 @@ public class NanoCpu {
         if (debug) {
             final TraceOperation ast = execution.trace(ins, target, targetAddr, operand, operandAddr);
             final StringBuilder sb = new StringBuilder();
-            sb.append(pc & 0xFF);
+            sb.append(String.format("%02x", pc & 0xFF));
             sb.append(": ");
             sb.append(ast.getInstruction().getName());
             if (ast.getOperand1() != null) {

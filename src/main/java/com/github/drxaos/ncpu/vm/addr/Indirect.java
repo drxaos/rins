@@ -23,6 +23,6 @@ public class Indirect implements Addressing {
 
     @Override
     public String toName(int address) {
-        return "[[" + (address & 0xff) + "]]";
+        return "[[" + String.format("%02x", address & 0xff) + "]]";
     }
 }

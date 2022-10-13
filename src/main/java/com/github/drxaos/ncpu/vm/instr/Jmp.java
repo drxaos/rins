@@ -21,7 +21,11 @@ public class Jmp implements NanoExecution {
     public void execute(NanoCpu nanoCpu, int pc, byte ins, NanoMemory mem, NanoIo io) {
         final int targetAddr = mem.incPcAndReadData();
         if (condition(mem)) {
-            mem.write(mem.PC, targetAddr);
+            if (targetAddr >= mem.A) {
+                mem.write(mem.PC, mem.read(mem.A));
+            } else {
+                mem.write(mem.PC, targetAddr);
+            }
         } else {
             mem.incPc();
         }

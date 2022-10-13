@@ -18,22 +18,23 @@ public class AsmBuilder extends NanoasmBaseListener {
     NanoasmParser parser;
 
     public AsmBuilder(String name, String code, NanoasmParser parser) {
-        this.compilationUnit = new AsmCompilationUnit()
-                .setName(name)
-                .setCode(code)
-                .setOperations(new ArrayList<>());
+        this.compilationUnit = new AsmCompilationUnit(name, code);
         this.code = code;
         this.parser = parser;
     }
 
     @Override
     public void enterLabel(NanoasmParser.LabelContext ctx) {
-        compilationUnit.getOperations().add(new AsmInstruction(
+        compilationUnit.getInstructions().add(new AsmInstruction(
                 ctx.start.getLine(),
                 ctx.start.getCharPositionInLine(),
-                "LABEL",
-                ctx.getText().replace(":", ""),
-                List.of()
+                "$LABEL",
+                ctx.getText(),
+                List.of(new AsmOperand(
+                        ctx.start.getLine(),
+                        ctx.start.getCharPositionInLine(),
+                        ctx.getText().replace(":", "")
+                ))
         ));
     }
 
@@ -73,7 +74,7 @@ public class AsmBuilder extends NanoasmBaseListener {
                 ));
             }
         }
-        compilationUnit.getOperations().add(new AsmInstruction(
+        compilationUnit.getInstructions().add(new AsmInstruction(
                 ctx.start.getLine(),
                 ctx.start.getCharPositionInLine(),
                 opcode.getText(),

@@ -4,7 +4,6 @@ public class NanoMemory {
     public final int PC;
     public final int FLAGS;
     public final int A;
-    public final int B;
 
     public final byte[] block;
 
@@ -15,7 +14,6 @@ public class NanoMemory {
         this.PC = size - 1;
         this.FLAGS = size - 2;
         this.A = size - 3;
-        this.B = size - 4;
     }
 
     public byte read(int address) {
@@ -48,5 +46,27 @@ public class NanoMemory {
 
     public byte incPcAndReadData() {
         return block[incPc() & 0xFF];
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder(block.length * 2);
+
+        sb.append("    ");
+        for (int i = 0; i < 16; i++) {
+            sb.append(String.format("_%01x ", i));
+        }
+        sb.append("\n");
+        for (int i = 0; i < block.length; i++) {
+            if (i > 0 && i % 16 == 0) {
+                sb.append("\n");
+            }
+            if (i % 16 == 0) {
+                sb.append(String.format("%01x_: ", i / 16));
+            }
+            sb.append(String.format("%02x", block[i]));
+            sb.append(" ");
+        }
+        return sb.toString();
     }
 }

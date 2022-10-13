@@ -24,11 +24,13 @@ PT = 11 A
 HALT               1111 1111
 NOP                0000 0000
 
-# BINARY
+# SHIFT
 
 ROL                0000 TR 01 target COUNT
 ROR                0000 TR 10 target COUNT
 SSR                0000 TR 11 target COUNT
+
+# BINARY
 
 MOV                0001 TR OP target operand ([target] = [operand], flags)
 
@@ -52,6 +54,7 @@ shift is signed
 
 JMP                1000 0000 point (PC = point)
 JMP short          1000 shift (PC = PC + shift)
+JMP @              1000 A (PC = [A])
 
 JIZ                1001 0000 point (PC = point, if ZF=1)
 JIZ short          1001 shift (PC = PC + shift, if ZF=1)
@@ -84,7 +87,8 @@ RS3                 1111 0000 - 1111 1110
 FOR X count = MOV X count ; loopNNN: ; JIZ endNNN
 FOR END = DEC X ; JMP loopNNN ; endNNN:
 
-
+LEA x a
+MOV x @a
 
 EXP a = b
 CPY a b

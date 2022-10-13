@@ -23,6 +23,6 @@ public class Flags implements Addressing {
 
     @Override
     public String toName(int address) {
-        return "TEST [" + address + "]";
+        return "FLAGS [" + String.format("%02x", address) + "]";
     }
 }

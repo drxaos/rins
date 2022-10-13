@@ -23,6 +23,6 @@ public class Literal implements Addressing {
 
     @Override
     public String toName(int address) {
-        return "" + address + "";
+        return "" + String.format("%02x", address) + "";
     }
 }
