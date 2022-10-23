@@ -14,8 +14,8 @@ public abstract class AbstractBranchOperation extends AbstractOpcode {
     }
 
     @Override
-    void recognizeOperand(AsmOperand targetOperand, AsmSymbolTable table) {
-        super.recognizeOperand(targetOperand, table);
+    void checkOperands(AsmInstruction asmInstruction, int count) {
+        final AsmOperand targetOperand = asmInstruction.getOperands().get(0);
         if (targetOperand.getType().equals(AsmOperand.Type.INDIRECT)) {
             throw new SyntaxException(new SyntaxError(
                     targetOperand.getLine(),

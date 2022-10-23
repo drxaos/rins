@@ -3,21 +3,33 @@ package com.github.drxaos.ncpu.asm.opcode.opcode;
 import com.github.drxaos.ncpu.asm.ast.AsmInstruction;
 import com.github.drxaos.ncpu.asm.ast.AsmOperand;
 import com.github.drxaos.ncpu.asm.ast.AsmSymbolTable;
+import com.github.drxaos.ncpu.asm.error.SyntaxError;
+import com.github.drxaos.ncpu.asm.error.SyntaxException;
 import com.github.drxaos.ncpu.vm.NanoInstruction;
 import com.github.drxaos.ncpu.vm.NanoMemory;
 
-public abstract class AbstractBinaryOperation extends AbstractOpcode {
+public abstract class AbstractShiftOperation extends AbstractOpcode {
     public int countOperands(AsmInstruction asmInstruction) {
         return 2;
     }
 
+    @Override
     void checkOperands(AsmInstruction asmInstruction, int count) {
         checkTargetOperand(asmInstruction, 0);
+
+        final AsmOperand countOperand = asmInstruction.getOperands().get(1);
+        if (!countOperand.getType().equals(AsmOperand.Type.LITERAL)) {
+            throw new SyntaxException(new SyntaxError(
+                    countOperand.getLine(),
+                    countOperand.getPos(),
+                    "only literals as count supported: " + countOperand.getExpression()
+            ));
+        }
     }
 
     @Override
     public int precalculateSize(AsmInstruction asmInstruction, AsmSymbolTable symbolTable) {
-        return 1 + asmInstruction.getOperands().get(0).getType().getSize() + asmInstruction.getOperands().get(1).getType().getSize();
+        return 1 + asmInstruction.getOperands().get(0).getType().getSize() + 1;
     }
 
     @Override
@@ -36,7 +48,6 @@ public abstract class AbstractBinaryOperation extends AbstractOpcode {
 
     protected int getCode(AsmInstruction asmInstruction) {
         return getBaseInstruction().getCode()
-               | asmInstruction.getOperands().get(0).getType().getCode() << 2
-               | asmInstruction.getOperands().get(1).getType().getCode();
+               | asmInstruction.getOperands().get(0).getType().getCode() << 2;
     }
 }

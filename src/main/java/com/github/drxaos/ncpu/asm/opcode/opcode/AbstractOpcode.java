@@ -42,6 +42,17 @@ public abstract class AbstractOpcode {
     void checkOperands(AsmInstruction asmInstruction, int count) {
     }
 
+    protected void checkTargetOperand(AsmInstruction asmInstruction, int index) {
+        final AsmOperand targetOperand = asmInstruction.getOperands().get(index);
+        if (targetOperand.getType().equals(AsmOperand.Type.LITERAL)) {
+            throw new SyntaxException(new SyntaxError(
+                    targetOperand.getLine(),
+                    targetOperand.getPos(),
+                    "literal as target not supported: " + targetOperand.getExpression()
+            ));
+        }
+    }
+
     void recognizeOperand(AsmOperand targetOperand, AsmSymbolTable table) {
         final String targetOperandExpression = targetOperand.getExpression().toLowerCase().strip();
 

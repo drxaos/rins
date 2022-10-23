@@ -78,6 +78,8 @@ public class Compiler {
     }
 
     public void resolveReferences(AsmCompilationUnit cu) {
+        cu.getSymbolTable().populateLiterals();
+
         final List<AsmOperand> notMatched = cu.getSymbolTable().getNotMatched();
         if (!notMatched.isEmpty()) {
             throw new SyntaxException(new SyntaxError(
@@ -86,8 +88,10 @@ public class Compiler {
                     "Unknown reference: " + notMatched.get(0).getVariable()
             ));
         }
-        final List<AsmSymbolTable.Match> matched = cu.getSymbolTable().getMatched();
-        matched.forEach(m -> m.getReference().setValue(m.getVariable().getOffset()));
+        final List<AsmSymbolTable.VariableMatch> matched1 = cu.getSymbolTable().getMatchedVariables();
+        matched1.forEach(m -> m.getReference().setValue(m.getVariable().getOffset()));
+        final List<AsmSymbolTable.LiteralMatch> matched2 = cu.getSymbolTable().getMatchedLiterals();
+        matched2.forEach(m -> m.getReference().setValue(m.getLiteral()));
     }
 
     public void compileInstructions(AsmCompilationUnit cu, NanoMemory nanoMemory) {

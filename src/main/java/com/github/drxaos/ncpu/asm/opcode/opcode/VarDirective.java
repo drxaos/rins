@@ -8,14 +8,6 @@ import com.github.drxaos.ncpu.asm.error.SyntaxException;
 import com.github.drxaos.ncpu.vm.NanoMemory;
 
 public class VarDirective extends AbstractOpcode {
-    public int countOperands(AsmInstruction asmInstruction) {
-        return 2;
-    }
-
-    @Override
-    public int precalculateSize(AsmInstruction asmInstruction, AsmSymbolTable table) {
-        return 1;
-    }
 
     public void fillSymbols(AsmInstruction asmInstruction, AsmSymbolTable table) {
         final AsmOperand operand = asmInstruction.getOperands().get(0);
@@ -23,8 +15,13 @@ public class VarDirective extends AbstractOpcode {
     }
 
     @Override
-    protected int getByte(AsmInstruction instruction, int index, NanoMemory mem) {
-        return instruction.getOperands().get(1).getValue();
+    protected int getByte(AsmInstruction asmInstruction, int index, NanoMemory mem) {
+        return asmInstruction.getOperands().get(index + 1).getValue();
+    }
+
+    @Override
+    public int precalculateSize(AsmInstruction asmInstruction, AsmSymbolTable table) {
+        return asmInstruction.getOperands().size() - 1;
     }
 
     @Override
@@ -36,7 +33,7 @@ public class VarDirective extends AbstractOpcode {
                 throw new SyntaxException(new SyntaxError(
                         operand.getLine(),
                         operand.getPos(),
-                        "variable name expected: " + operand.getExpression()
+                        "array name expected: " + operand.getExpression()
                 ));
             }
 

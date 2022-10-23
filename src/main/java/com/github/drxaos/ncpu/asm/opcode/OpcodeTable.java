@@ -3,19 +3,25 @@ package com.github.drxaos.ncpu.asm.opcode;
 import com.github.drxaos.ncpu.asm.opcode.opcode.AbstractOpcode;
 import com.github.drxaos.ncpu.asm.opcode.opcode.AddOperation;
 import com.github.drxaos.ncpu.asm.opcode.opcode.AndOperation;
-import com.github.drxaos.ncpu.asm.opcode.opcode.ArrayDirective;
+import com.github.drxaos.ncpu.asm.opcode.opcode.VarDirective;
+import com.github.drxaos.ncpu.asm.opcode.opcode.DecOperation;
 import com.github.drxaos.ncpu.asm.opcode.opcode.HaltOperation;
+import com.github.drxaos.ncpu.asm.opcode.opcode.IncOperation;
 import com.github.drxaos.ncpu.asm.opcode.opcode.JinOperation;
 import com.github.drxaos.ncpu.asm.opcode.opcode.JioOperation;
 import com.github.drxaos.ncpu.asm.opcode.opcode.JizOperation;
 import com.github.drxaos.ncpu.asm.opcode.opcode.JmpOperation;
 import com.github.drxaos.ncpu.asm.opcode.opcode.LabelDirective;
 import com.github.drxaos.ncpu.asm.opcode.opcode.MovOperation;
+import com.github.drxaos.ncpu.asm.opcode.opcode.NegOperation;
 import com.github.drxaos.ncpu.asm.opcode.opcode.NopOperation;
+import com.github.drxaos.ncpu.asm.opcode.opcode.NotOperation;
 import com.github.drxaos.ncpu.asm.opcode.opcode.OrOperation;
+import com.github.drxaos.ncpu.asm.opcode.opcode.RolOperation;
+import com.github.drxaos.ncpu.asm.opcode.opcode.RorOperation;
+import com.github.drxaos.ncpu.asm.opcode.opcode.SsrOperation;
 import com.github.drxaos.ncpu.asm.opcode.opcode.StartDirective;
 import com.github.drxaos.ncpu.asm.opcode.opcode.SubOperation;
-import com.github.drxaos.ncpu.asm.opcode.opcode.VarDirective;
 import com.github.drxaos.ncpu.asm.opcode.opcode.XorOperation;
 import lombok.Getter;
 
@@ -23,13 +29,13 @@ public enum OpcodeTable {
     // directive
     $START(new StartDirective()),
     $VAR(new VarDirective()),
-    $ARRAY(new ArrayDirective()),
+    $ARRAY(new VarDirective()),
     $LABEL(new LabelDirective()),
 
     // shift
-    // ROL
-    // ROR
-    // SSR
+    ROL(new RolOperation()),
+    ROR(new RorOperation()),
+    SSR(new SsrOperation()),
 
     // system
     NOP(new NopOperation()),
@@ -44,10 +50,10 @@ public enum OpcodeTable {
     XOR(new XorOperation()),
 
     // unary
-    // INC
-    // DEC
-    // NEG
-    // NOT
+    INC(new IncOperation()),
+    DEC(new DecOperation()),
+    NEG(new NegOperation()),
+    NOT(new NotOperation()),
 
     // branch
     JMP(new JmpOperation()),
@@ -65,4 +71,4 @@ public enum OpcodeTable {
     OpcodeTable(AbstractOpcode opcode) {
         this.opcode = opcode;
     }
-    }
+}

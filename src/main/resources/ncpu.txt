@@ -54,10 +54,11 @@ shift is signed
 
 JMP                1000 0000 point (PC = point)
 JMP short          1000 shift (PC = PC + shift)
-JMP @              1000 A (PC = [A])
+JMP @              1000 0000 A (PC = [A])
 
 JIZ                1001 0000 point (PC = point, if ZF=1)
 JIZ short          1001 shift (PC = PC + shift, if ZF=1)
+JEQ
 
 JNZ addr = JIZ label ; JMP addr ; label:
 
@@ -71,16 +72,25 @@ JIO short          1011 shift (PC = PC + shift, if OF=1)
 
 JNO(JIP) addr = JIO label ; JMP addr ; label:
 
+JIL                1100 0000 point (PC = point, if SF<>OF)
+JIL short          1100 shift (PC = PC + shift, if SF<>OF)
+
+JGE(JNL) addr = JIL label ; JMP addr ; label:
+
+JIG                1101 0000 point (PC = point, if ZF=0 and SF=OF)
+JIG short          1101 shift (PC = PC + shift, if ZF=0 and SF=OF)
+
+JLE(JNG) addr = JIG label ; JMP addr ; label:
+
+
 # IO
 
-IN                 1100 TR PT target port ([target] <= (port)), flags)
-OUT                1101 PT OP port operand ((port) <= [operand], flags)
+IN                 1110 0 PRT (A <= (port)), flags)
+OUT                1110 1 PRT ((port) <= A, flags)
 
 # RESERVED
 
-RS1                 0000 0010 - 0000 1111
-RS2                 1110 0000 - 1110 1111
-RS3                 1111 0000 - 1111 1110
+RS1                 1111 0000 - 1111 1110
 
 # PREPROCESSOR
 
