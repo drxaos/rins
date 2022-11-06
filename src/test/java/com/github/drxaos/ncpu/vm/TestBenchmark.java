@@ -8,24 +8,28 @@ import java.util.concurrent.ForkJoinTask;
 
 public class TestBenchmark {
     public static void main(String[] args) {
-        List<NanoCpu> cpus = new ArrayList<>();
+        List<List<NanoCpu>> cpus = new ArrayList<>();
 
         Random rnd = new Random();
-        for (int i = 0; i < 50000; i++) {
-            int port = 22 + rnd.nextInt(50);
-            int x = 45 + rnd.nextInt(50);
-            int add = 5 + rnd.nextInt(50);
-            int out = 99;
+        for (int i = 0; i < 1000; i++) {
+            ArrayList<NanoCpu> subList = new ArrayList<>();
+            cpus.add(subList);
+            for (int j = 0; j < 1000; j++) {
+                int port = 22 + rnd.nextInt(50);
+                int x = 45 + rnd.nextInt(50);
+                int add = 5 + rnd.nextInt(50);
+                int out = 99;
 
-            final NanoCpu cpu = makeCpu(port, x, add, out);
-            cpus.add(cpu);
+                final NanoCpu cpu = makeCpu(port, x, add, out);
+                subList.add(cpu);
+            }
         }
 
-        final ForkJoinPool pool = new ForkJoinPool(4);
+        final ForkJoinPool pool = new ForkJoinPool(12);
 
         for (int i = 0; i < 100; i++) {
             final long start = System.currentTimeMillis();
-            cpus.stream().map(c -> pool.submit((() -> c.cycle(100)))).toList().forEach(ForkJoinTask::join);
+            cpus.stream().map(list -> pool.submit((() -> list.forEach(c -> c.cycle(1))))).toList().forEach(ForkJoinTask::join);
             final long end = System.currentTimeMillis();
             System.out.println(end - start);
         }

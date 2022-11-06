@@ -178,10 +178,10 @@ public enum NanoInstruction {
     JIO_S(0b0_1011_0001, 0b0_1011_1111, JioShort.IMPL),
 
     JIL(0b0___1100_0000, Jio.IMPL),
-    JIL_S(0b0_1100_0001, 0b0_1011_1111, JioShort.IMPL),
+    JIL_S(0b0_1100_0001, 0b0_1100_1111, JioShort.IMPL),
 
     JIG(0b0___1101_0000, Jio.IMPL),
-    JIG_S(0b0_1101_0001, 0b0_1011_1111, JioShort.IMPL),
+    JIG_S(0b0_1101_0001, 0b0_1101_1111, JioShort.IMPL),
 
     IN_II(0b0___1110_0000, In.IMPL_II),
     IN_ID(0b0___1110_0001, In.IMPL_ID),
