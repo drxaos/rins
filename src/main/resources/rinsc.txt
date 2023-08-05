@@ -1,0 +1,134 @@
+# MEM OFFSETS
+
+MIN = 0
+MAX = 255
+PC = MAX (program counter)
+PN = MAX - 1 (program page number)
+SP = MAX - 2 (stack pointer)
+SN = MAX - 3 (stack page number)
+FLAGS = MAX - 4 (int, sign, zero, overflow, )
+
+# IO
+
+mem = input[123]            0000 0000  mem  123
+mem = input[mem]            0000 0001  mem  mem
+output[123] = mem           0000 0010  123  mem
+output[mem] = mem           0000 0011  mem  mem
+output[123] = 123           0000 0100  123  123
+output[mem] = 123           0000 0101  mem  123
+
+# ARITHMETICS
+
+mem = abs(mem)              0000 0110  mem  mem
+mem = abs(mem)              0000 0111  mem
+mem = neg(mem)              0000 1000  mem  mem
+mem = neg(mem)              0000 1001  mem
+mem++                       0000 1010  mem
+mem--                       0000 1011  mem
+
+mem = 123                   0000 1100  mem  123
+mem = mem                   0000 1101  mem  mem
+mem = mem + mem             0000 1110  mem  mem  mem
+mem = mem + 123             0000 1111  mem  mem  123
+mem = mem - mem             0001 0000  mem  mem  mem
+mem = mem - 123             0001 0001  mem  mem  123
+mem = mem * mem             0001 0010  mem  mem  mem
+mem = mem * 123             0001 0011  mem  mem  123
+mem = mem / mem             0001 0100  mem  mem  mem
+mem = mem / 123             0001 0101  mem  mem  123
+
+mem = true  -->  mem = 1
+
+# IF
+
+if positive: pc             0001 0110  pc
+if negative: pc             0001 0111  pc
+if zero: pc                 0001 1000  pc
+if overflow: pc             0001 1001  pc
+
+if mem == 123: pc           0001 1010  mem  123  pc
+if mem == mem: pc           0001 1011  mem  mem  pc
+if mem > 123: pc            0001 1100  mem  123  pc
+if mem > mem: pc            0001 1101  mem  mem  pc
+if mem >= 123: pc           0001 1110  mem  123  pc
+if mem >= mem: pc           0001 1111  mem  mem  pc
+if mem < 123: pc            0010 0000  mem  123  pc
+if mem < mem: pc            0010 0001  mem  mem  pc
+if mem <= 123: pc           0010 0010  mem  123  pc
+if mem <= mem: pc           0010 0011  mem  mem  pc
+
+if mem == true: pc  -->  if mem == 1: pc
+
+# BINARY
+
+mem = mem & 123             0010 0100  mem  mem  123
+mem = mem & mem             0010 0101  mem  mem  mem
+mem = mem | 123             0010 0110  mem  mem  123
+mem = mem | mem             0010 0111  mem  mem  mem
+mem = mem ^ 123             0010 1000  mem  mem  123
+mem = mem ^ mem             0010 1001  mem  mem  mem
+
+mem = ~mem  -->  mem = mem ^ 255
+
+mem = mem >> 123            0010 1010  mem  mem  123
+mem = mem >> mem            0010 1011  mem  mem  mem
+mem = mem >>> 123           0010 1100  mem  mem  123
+mem = mem >>> mem           0010 1101  mem  mem  mem
+mem = mem << 123            0010 1110  mem  mem  123
+mem = mem << mem            0010 1111  mem  mem  mem
+
+# STACK
+
+push(123)                   0011 0000  123
+push(mem)                   0011 0001  mem
+pop(mem)                    0011 0010  mem
+
+# CALL
+
+goto pc                     0011 0011  pc
+
+call proc  -->  push(PC); goto proc
+return  -->  pop(PC)
+
+# ARRAY
+
+mem[123] = 123              0011 0100  mem  123  123
+mem[mem] = 123              0011 0101  mem  mem  123
+mem[123] = mem              0011 0110  mem  123  mem
+mem[mem] = mem              0011 0111  mem  mem  mem
+mem = mem[123]              0011 1000  mem  mem  123
+mem = mem[mem]              0011 1001  mem  mem  mem
+
+# MEM PAGES
+
+mXXX[123] = 123             0011 1010  XXX  123  123
+mXXX[mem] = 123             0011 1011  XXX  mem  123
+mXXX[123] = mem             0011 1100  XXX  123  mem
+mXXX[mem] = mem             0011 1101  XXX  mem  mem
+mem = mXXX[123]             0011 1110  mem  XXX  123
+mem = mXXX[mem]             0011 1111  mem  XXX  mem
+
+
+
+# OUT PORTS
+
+0 - light
+1 - left paddle
+2 - right paddle
+3 - sensor angle
+4 - inject
+5
+6
+7
+
+# IN PORTS
+
+0 - power
+1 - sensor distance
+2 - sensor temperature
+3
+4
+5
+6
+7
+
